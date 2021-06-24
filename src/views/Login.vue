@@ -28,6 +28,10 @@ export default {
     login() {
       fetch('api/signin',{
         method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+           "content-type": "application/json" 
+        },
         body: JSON.stringify({
           username: this.username,
           password: this.password,
