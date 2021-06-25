@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="login">
     <img alt="Vue logo" src="../assets/logo.png">
     <el-input v-model="username" placeholder="请输入账号"></el-input>
     <el-input v-model="password" placeholder="请输入密码" show-password></el-input>
@@ -14,11 +14,11 @@
 
 export default {
   name: 'Login',
-  data: function() {
+  data() {
     return {
       username: '',
       password: '',
-    }
+    };
   },
   methods: {
     reset() {
@@ -28,7 +28,7 @@ export default {
     login() {
       fetch('api/signin',{
         method: 'POST',
-        credentials: 'same-origin',
+        // credentials: 'same-origin',
         headers: {
            "content-type": "application/json" 
         },
@@ -36,8 +36,14 @@ export default {
           username: this.username,
           password: this.password,
         })
-      }).then((res)=>{
-        console.log(res);
+      }).then(res => res.json()).then((res)=>{
+        if(res.ret === 0) {
+          this.$store.commit('login');
+          this.$router.push({name: 'Index'});
+          this.$store.dispatch('checkLogin');
+        } else {
+          this.$message.error('用户名或密码错误');
+        }
       })
     }
   }
