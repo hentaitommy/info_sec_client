@@ -26,7 +26,7 @@ export default {
       this.password = '';
     },
     login() {
-      fetch('api/signin',{
+      fetch('/api/signin',{
         method: 'POST',
         // credentials: 'same-origin',
         headers: {
@@ -39,7 +39,11 @@ export default {
       }).then(res => res.json()).then((res)=>{
         if(res.ret === 0) {
           this.$store.commit('login');
-          this.$router.push({name: 'Index'});
+          if (this.$route.query.next) {
+            window.open(this.$route.query.next);
+          } else {
+            this.$router.push({name: 'Index'});
+          }
           this.$store.dispatch('checkLogin');
         } else {
           this.$message.error('用户名或密码错误');

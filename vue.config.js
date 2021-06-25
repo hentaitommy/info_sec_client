@@ -6,6 +6,11 @@ module.exports = {
       '/api': {
         target: 'http://tommyserver.xyz:8000/', //API服务器的地址
         changeOrigin: true, // 是否跨域，虚拟的站点需要更管origin
+      },
+      '/o': {
+        target: 'http://tommyserver.xyz:8000/', //API服务器的地址
+        changeOrigin: true, // 是否跨域，虚拟的站点需要更管origin
+        ws: true, //代理websockets
       }
     },
   }
